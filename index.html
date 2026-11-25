@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>باقي على خطوبة عبدالرحمن وحبوبه</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Tajawal:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;font-family:'Cairo','Tajawal',sans-serif;color:#7a3b69;background:linear-gradient(135deg,#ffe3ef,#e9ddff 50%,#fff4e0);background-size:300% 300%;animation:bg 14s ease infinite;overflow-x:hidden;display:flex;align-items:center;justify-content:center;padding:24px}
+@keyframes bg{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+.wrap{position:relative;z-index:2;text-align:center;max-width:900px;width:100%}
+h1{font-size:clamp(1.8rem,6vw,3.4rem);font-weight:800;margin-bottom:8px;background:linear-gradient(90deg,#e0559b,#a77bf0);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.5}
+.sub{font-size:1.1rem;margin-bottom:28px;opacity:.8}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(min-width:700px){.cards{grid-template-columns:repeat(6,1fr)}}
+.card{position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(255,255,255,.55),rgba(255,255,255,.12));backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);border:1px solid rgba(255,255,255,.7);border-radius:28px;padding:18px 6px;box-shadow:0 10px 30px rgba(190,110,170,.25),inset 0 1.5px 1px rgba(255,255,255,.95),inset 0 -8px 16px rgba(255,255,255,.18)}
+.card::before{content:"";position:absolute;top:0;left:8%;width:84%;height:45%;border-radius:0 0 50% 50%/0 0 100% 100%;background:linear-gradient(180deg,rgba(255,255,255,.65),rgba(255,255,255,0));pointer-events:none}
+.blob{position:fixed;border-radius:50%;filter:blur(40px);z-index:0;opacity:.7;animation:drift 12s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(40px,-60px) scale(1.2)}}
+.foot{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:3;white-space:nowrap;padding:10px 24px;border-radius:999px;font-weight:600;font-size:clamp(.95rem,3.8vw,1.2rem);color:#a63a7c;background:linear-gradient(145deg,rgba(255,255,255,.6),rgba(255,255,255,.18));backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,.75);box-shadow:0 8px 24px rgba(190,110,170,.25),inset 0 1.5px 1px rgba(255,255,255,.95)}
+.num{font-size:clamp(1.8rem,7vw,2.6rem);font-weight:800;color:#d6478f;display:block}
+.lbl{font-size:1rem;color:#8b6bb8}
+.pulse{animation:pulse .5s ease}
+@keyframes pulse{50%{transform:scale(1.12)}}
+.quote{margin-top:32px;font-size:clamp(1.1rem,3.5vw,1.5rem);min-height:3.2em;transition:opacity .8s;padding:0 8px}
+.float{position:fixed;bottom:-60px;z-index:1;pointer-events:none;animation:rise linear forwards}
+@keyframes rise{to{transform:translateY(-115vh) rotate(30deg);opacity:0}}
+.star{position:fixed;z-index:1;pointer-events:none;animation:tw 2.5s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.1;transform:scale(.6)}50%{opacity:1;transform:scale(1.2)}}
+#done{display:none}
+.confetti{position:fixed;top:-20px;z-index:5;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+</style>
+</head>
+<body>
+<div class="blob" style="width:240px;height:240px;background:#ff9ccc;top:8%;right:-60px"></div><div class="blob" style="width:260px;height:260px;background:#b79cff;bottom:15%;left:-70px"></div><div class="blob" style="width:180px;height:180px;background:#ffd89b;top:55%;right:20%"></div>
+<div class="wrap">
+  <h1>باقي على خطوبة عبدالرحمن وحبوبه 💕</h1>
+  <p class="sub">١ يوليو ٢٠٢٩</p>
+  <div id="timer" class="cards"></div>
+  <div id="done"><h1>🎉 مبروك الخطوبة 🎉</h1></div>
+  <p class="quote" id="quote"></p>
+</div>
+<div class="foot">عبدالرحمن بيحب حبوبه اوي 💗</div>
+<script>
+const target=new Date('2029-07-01T00:00:00+03:00'); // Cairo summer time (UTC+3)
+const labels=['سنين','شهور','أيام','ساعات','دقايق','ثواني'];
+const timer=document.getElementById('timer');
+const els=labels.map(l=>{const c=document.createElement('div');c.className='card';c.innerHTML='<span class="num">0</span><span class="lbl">'+l+'</span>';timer.appendChild(c);return c});
+const prev=[];
+function parts(now){
+  let a=new Date(now), b=target;
+  let years=b.getFullYear()-a.getFullYear(), t=new Date(a); t.setFullYear(a.getFullYear()+years);
+  if(t>b){years--;t=new Date(a);t.setFullYear(a.getFullYear()+years)}
+  let months=0;
+  while(true){const n=new Date(t);n.setMonth(n.getMonth()+1);if(n<=b){t=n;months++}else break}
+  let ms=b-t;
+  const days=Math.floor(ms/864e5);ms%=864e5;
+  const h=Math.floor(ms/36e5);ms%=36e5;
+  const m=Math.floor(ms/6e4);ms%=6e4;
+  return [years,months,days,h,m,Math.floor(ms/1000)];
+}
+function tick(){
+  const now=new Date();
+  if(now>=target){finish();return}
+  parts(now).forEach((v,i)=>{
+    if(prev[i]!==v){const n=els[i].querySelector('.num');n.textContent=v;if(prev[i]!==undefined){els[i].classList.remove('pulse');void els[i].offsetWidth;els[i].classList.add('pulse')}prev[i]=v}
+  });
+}
+let finished=false;
+function finish(){
+  if(finished)return;finished=true;clearInterval(iv);
+  timer.style.display='none';document.getElementById('done').style.display='block';
+  const cols=['#ff7eb6','#b69cff','#ffd66b','#7fe0c8'];
+  setInterval(()=>{const c=document.createElement('div');c.className='confetti';c.textContent=Math.random()<.4?'💖':'';
+    if(!c.textContent){c.style.width='10px';c.style.height='14px';c.style.background=cols[Math.random()*4|0]}
+    c.style.left=Math.random()*100+'vw';c.style.animationDuration=(3+Math.random()*3)+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),6500)},120);
+}
+const iv=setInterval(tick,1000);tick();
+const quotes=['حبك بيخلّي كل يوم يعدي أحلى 💗','كل ثانية بتعدي بتقرّبنا من يومنا 🌸','إنتي أحلى حاجة حصلتلي 🦋','الأيام حلوة أوي وإنتي فيها ✨','هنعدي الأيام دي سوا، وبعدها يبدأ أحلى حكاية 💍'];
+let qi=0;const q=document.getElementById('quote');q.textContent=quotes[0];
+setInterval(()=>{q.style.opacity=0;setTimeout(()=>{qi=(qi+1)%quotes.length;q.textContent=quotes[qi];q.style.opacity=1},800)},5000);
+const em=['💖','🌹','🦋','🌸','💗','🌷'];
+function spawn(){const f=document.createElement('div');f.className='float';f.textContent=em[Math.random()*em.length|0];
+  f.style.left=Math.random()*100+'vw';f.style.fontSize=(16+Math.random()*22)+'px';f.style.animationDuration=(9+Math.random()*8)+'s';document.body.appendChild(f);setTimeout(()=>f.remove(),17500)}
+setInterval(spawn,700);for(let i=0;i<8;i++)setTimeout(spawn,i*150);
+for(let i=0;i<25;i++){const s=document.createElement('div');s.className='star';s.textContent='✦';s.style.color='#fff';s.style.textShadow='0 0 6px #e9a6ff';
+  s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';s.style.fontSize=(8+Math.random()*10)+'px';s.style.animationDelay=Math.random()*2.5+'s';document.body.appendChild(s)}
+</script>
+</body>
+</html>
