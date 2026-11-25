@@ -23,9 +23,6 @@ h1{font-size:clamp(1.8rem,6vw,3.4rem);font-weight:800;margin-bottom:8px;backgrou
 .lbl{font-size:1rem;color:#8b6bb8}
 .pulse{animation:pulse .5s ease}
 @keyframes pulse{50%{transform:scale(1.12)}}
-.quote{margin-top:32px;font-size:clamp(1.1rem,3.5vw,1.5rem);min-height:3.2em;transition:opacity .8s;padding:0 8px}
-.float{position:fixed;bottom:-60px;z-index:1;pointer-events:none;animation:rise linear forwards}
-@keyframes rise{to{transform:translateY(-115vh) rotate(30deg);opacity:0}}
 .star{position:fixed;z-index:1;pointer-events:none;animation:tw 2.5s ease-in-out infinite}
 @keyframes tw{0%,100%{opacity:.1;transform:scale(.6)}50%{opacity:1;transform:scale(1.2)}}
 #done{display:none}
@@ -77,10 +74,6 @@ function finish(){
     c.style.left=Math.random()*100+'vw';c.style.animationDuration=(3+Math.random()*3)+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),6500)},120);
 }
 const iv=setInterval(tick,1000);tick();
-const em=['🌹','🦋','🌸','🌷'];
-function spawn(){const f=document.createElement('div');f.className='float';f.textContent=em[Math.random()*em.length|0];
-  f.style.left=Math.random()*100+'vw';f.style.fontSize=(16+Math.random()*22)+'px';f.style.animationDuration=(9+Math.random()*8)+'s';document.body.appendChild(f);setTimeout(()=>f.remove(),17500)}
-setInterval(spawn,700);for(let i=0;i<8;i++)setTimeout(spawn,i*150);
 for(let i=0;i<25;i++){const s=document.createElement('div');s.className='star';s.textContent='✦';s.style.color='#fff';s.style.textShadow='0 0 6px #e9a6ff';
   s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';s.style.fontSize=(8+Math.random()*10)+'px';s.style.animationDelay=Math.random()*2.5+'s';document.body.appendChild(s)}
 </script>
